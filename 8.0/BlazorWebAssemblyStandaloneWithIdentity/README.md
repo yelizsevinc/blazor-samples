@@ -17,15 +17,25 @@ For more information, see [Secure ASP.NET Core Blazor WebAssembly with ASP.NET C
 
    * `appsettings.json` file in the root of the `Backend` app.
    * `wwwroot/appsettings.json` file in the `BlazorWasmAuth` app.
+  
+1. If you plan to run the apps using the .NET CLI with `dotnet run`, note that first launch profile in the launch settings file is used to run an app, which is the insecure `http` profile (HTTP protocol). To run the apps securely (HTTPS protocol), take ***either*** of the following approaches:
+
+   * Pass the launch profile option to the command when running the apps: `dotnet run -lp https`.
+   * In the launch settings files (`Properties/launchSettings.json`) ***of both projects***, rotate the `https` profiles to the top, placing them above the `http` profiles.
+  
+   If you use Visual Studio to run the apps, Visual Studio automatically uses the `https` launch profile. No action is required to run the apps securely when using Visual Studio.
 
 1. Run the `Backend` and `BlazorWasmAuth` apps.
 
 1. Navigate to the `BlazorWasmAuth` app at the `FrontendUrl`.
 
-1. Register a new user using the **Register** link in the upper-right corner of the app's UI.
+1. Register a new user using the **Register** link in the upper-right corner of the app's UI or use one of the preregistered test users:
 
-1. Log in with the new user.
+   * `leela@contoso.com` (Password: `Passw0rd!`). Leela has `Administrator`, `Manager`, and `User` roles and can access the private manager page but not the private editor page of the app. She can process data with both forms on the data processing page.
+   * `harry@contoso.com` (Password: `Passw0rd!`). Harry only has the `User` role and can't access the manager and editor pages. He can only process data with the first form on the data processing page.
 
-1. Navigate to the private page (`Components/Pages/PrivatePage.razor` at `/private-page`) that only authenticated users can reach. A link to the page appears in the navigation sidebar after the user is authenticated.
+1. Log in with the user.
+
+1. Navigate to the private page (`Components/Pages/PrivatePage.razor` at `/private-page`) that only authenticated users can reach. A link to the page appears in the navigation sidebar after the user is authenticated. Navigate to the private manager and editor pages to explore how the user's roles influence the pages that they can visit. Navigate to the data processing page (`Components/Pages/DataProcessing.razor` at `/data-processing`) to experience authenticated and authorized data processing web API calls.
 
 1. Log out of the app.

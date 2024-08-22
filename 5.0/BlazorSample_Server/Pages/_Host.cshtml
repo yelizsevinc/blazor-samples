@@ -20,7 +20,7 @@
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
 
-    <div id="blazor-error-ui">
+    <div id="blazor-error-ui" data-nosnippet>
         <environment include="Staging,Production">
             An error has occurred. This application may no longer respond until reloaded.
         </environment>
@@ -37,7 +37,6 @@
             var win1251decoder = new TextDecoder('windows-1251');
             var bytes = new Uint8Array(win1251Array);
             var decodedArray = win1251decoder.decode(bytes);
-            console.log(decodedArray);
             return decodedArray;
         };
     </script>

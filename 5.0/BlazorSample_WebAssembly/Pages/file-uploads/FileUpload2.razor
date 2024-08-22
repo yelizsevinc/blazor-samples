@@ -10,7 +10,7 @@
 <p>
     <label>
         Upload up to @maxAllowedFiles files:
-        <InputFile OnChange="@OnInputFileChange" multiple />
+        <InputFile OnChange="OnInputFileChange" multiple />
     </label>
 </p>
 
@@ -70,8 +70,7 @@
                 {
                     files.Add(new() { Name = file.Name });
 
-                    var fileContent = 
-                        new StreamContent(file.OpenReadStream(maxFileSize));
+                    var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
 
                     fileContent.Headers.ContentType = 
                         new MediaTypeHeaderValue(file.ContentType);

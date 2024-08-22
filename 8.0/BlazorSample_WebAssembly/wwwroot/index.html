@@ -22,7 +22,7 @@
         <div class="loading-progress-text"></div>
     </div>
 
-    <div id="blazor-error-ui">
+    <div id="blazor-error-ui" data-nosnippet>
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
@@ -33,7 +33,6 @@
             var win1251decoder = new TextDecoder('windows-1251');
             var bytes = new Uint8Array(win1251Array);
             var decodedArray = win1251decoder.decode(bytes);
-            console.log(decodedArray);
             return decodedArray;
         };
     </script>
@@ -78,14 +77,6 @@
         }
     </script>
     <script>
-        window.returnArrayAsync = () => {
-            DotNet.invokeMethodAsync('BlazorSample', 'ReturnArrayAsync')
-                .then(data => {
-                    console.log(data);
-                });
-        };
-    </script>
-    <script>
         window.sayHello1 = (dotNetHelper) => {
             return dotNetHelper.invokeMethodAsync('GetHelloMessage');
         };
@@ -122,24 +113,30 @@
         }
     </script>
     <script>
-        window.setImage = async (imageElementId, imageStream) => {
-            const arrayBuffer = await imageStream.arrayBuffer();
-            const blob = new Blob([arrayBuffer]);
-            const url = URL.createObjectURL(blob);
-            const image = document.getElementById(imageElementId);
-            image.onload = () => {
-                URL.revokeObjectURL(url);
-            }
-            image.src = url;
+        window.setSource = async (elementId, stream, contentType, title) => {
+          const arrayBuffer = await stream.arrayBuffer();
+          let blobOptions = {};
+          if (contentType) {
+            blobOptions['type'] = contentType;
+          }
+          const blob = new Blob([arrayBuffer], blobOptions);
+          const url = URL.createObjectURL(blob);
+          const element = document.getElementById(elementId);
+          element.title = title;
+          element.onload = () => {
+            URL.revokeObjectURL(url);
+          }
+          element.src = url;
         }
     </script>
     <script>
-        window.assignDotNetHelper = (element, dotNetHelper) => {
-            element.dotNetHelper = dotNetHelper;
-        }
-        window.interopCall = async (element) => {
-            await element.dotNetHelper.invokeMethodAsync('UpdateMessage');
-        }
+        window.setElementText1 = (element, text) => element.innerText = text;
+    </script>
+    <script>
+        window.setElementText2 = (element, text) => {
+            element.innerText = text;
+            return text;
+        };
     </script>
 </body>
 

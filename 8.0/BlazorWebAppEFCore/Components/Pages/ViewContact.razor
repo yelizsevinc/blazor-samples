@@ -40,7 +40,9 @@ else
         </a>
         @if (!Deleted)
         {
-            <a class="btn btn-primary" href="edit/@Contact.Id" title="Edit">Edit</a><span>&nbsp;</span>
+            <a class="btn btn-primary" href="edit/@Contact.Id" title="Edit">Edit</a>
+
+            <span>&nbsp;</span>
             @if (!ShowConfirmation)
             {
                 <button class="btn btn-danger" @onclick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</button>

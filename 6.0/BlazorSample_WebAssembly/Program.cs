@@ -2,15 +2,18 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration.Memory;
 using BlazorSample;
+using BlazorSample.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.DetectIncorrectUsageOfTransients();
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<NotifierService>();
+builder.Services.AddTransient<TransientDisposableService>();
 
-#region snippet1
+// <snippet1>
 var vehicleData = new Dictionary<string, string?>()
 {
     { "color", "blue" },
@@ -24,6 +27,8 @@ var vehicleData = new Dictionary<string, string?>()
 var memoryConfig = new MemoryConfigurationSource { InitialData = vehicleData };
 
 builder.Configuration.Add(memoryConfig);
-#endregion
+// </snippet1>
 
-await builder.Build().RunAsync();
+var host = builder.Build();
+host.EnableTransientDisposableDetection();
+await host.RunAsync();

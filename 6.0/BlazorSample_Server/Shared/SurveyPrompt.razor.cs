@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorSample.Shared;
 
@@ -19,8 +20,7 @@ public partial class SurveyPrompt :
         base.OnParametersSet();
 
         subscription?.Dispose();
-        subscription = 
-            Parent is not null ? Parent.Subscribe(this) : null;
+        subscription = Parent?.Subscribe(this);
     }
 
     public void OnCompleted()

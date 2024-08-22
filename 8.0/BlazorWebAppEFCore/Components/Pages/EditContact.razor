@@ -15,10 +15,11 @@
 }
 else
 {
-    <ContactForm Busy="@Busy" Contact="@Contact"
-                 DbContact="@DbContact"
-                 IsAdd="false"
-                 CancelRequest="Cancel"
+    <ContactForm Busy="Busy" 
+                 Contact="Contact" 
+                 DbContact="DbContact" 
+                 IsAdd="false" 
+                 CancelRequest="Cancel" 
                  ValidationResult="@(async (success) => await ValidationResultAsync(success))" />
 }
 @if (ConcurrencyError)
@@ -85,7 +86,7 @@ else
     /// Start it up
     /// </summary>
     /// <returns>Task</returns>
-    #region snippet2
+    // <snippet2>
     protected override async Task OnInitializedAsync()
     {
         Busy = true;
@@ -111,7 +112,7 @@ else
 
         await base.OnInitializedAsync();
     }
-    #endregion
+    // </snippet2>
 
     /// <summary>
     /// Result of form validation
@@ -192,10 +193,10 @@ else
     /// <summary>
     /// Implement <see cref="IDisposable"/>.
     /// </summary>
-    #region snippet1
+    // <snippet1>
     public void Dispose()
     {
         Context?.Dispose();
     }
-    #endregion
+    // </snippet1>
 }

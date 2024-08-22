@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using BlazorSample;
 using BlazorSample.Data;
+using BlazorSample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,10 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<NotifierService>();
 builder.Services.AddHttpClient();
+builder.DetectIncorrectUsageOfTransients();
+builder.Services.AddTransient<TransientDependency>();
+builder.Services.AddTransient<ITransitiveTransientDisposableDependency, 
+    TransitiveTransientDisposableDependency>();
 
 var app = builder.Build();
 
